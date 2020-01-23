@@ -1,6 +1,7 @@
 package com.aline.unittest.service;
 
 import com.aline.unittest.commons.enumeration.PlayerStatusEnum;
+import com.aline.unittest.commons.exceptions.DamageExceededException;
 import com.aline.unittest.commons.exceptions.DeadPlayerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ public class PlayerService {
     private EnemyService enemyService;
 
     @Autowired
-    public PlayerService (AttackService attackService, EnemyService enemyService) {
+    public PlayerService(AttackService attackService, EnemyService enemyService) {
         this.attackService = attackService;
         this.enemyService = enemyService;
     }
@@ -45,7 +46,7 @@ public class PlayerService {
         return enemy;
     }
 
-    public Player getStronger(Player player){
+    public Player getStronger(Player player) {
         if (player.getLife() == 0.0F)
             throw new DeadPlayerException("The player is dead.");
         player.setLife(player.getLife() + 100F);
@@ -54,9 +55,25 @@ public class PlayerService {
     }
 
     public Player die(Player player) {
+        setStatusDie(player);
+        return player;
+    }
+
+    public void setStatusDie(Player player) {
         player.setLife(0.0F);
         player.setPlayerStatusEnum(PlayerStatusEnum.DEAD);
-        return player;
+    }
+
+//
+//    public Player createClonePlayer(Player player){
+//
+//    }
+
+    // Método para mostrar o uso do Argument Captor do Mockito
+    public void createStrongClonePlayer(Player player) {
+        Player playerClone = new Player(player.getId(), "playerClone", player.getSize(), player.getVelocity());
+
+        enemyService.doNothing(playerClone);
     }
 }
 

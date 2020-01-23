@@ -10,15 +10,10 @@ public class Player{
 
     @Id
     private Integer id;
-
     private String name;
-
     private Float life;
-
     private Float size;
-
     private Float velocity;
-
     private PlayerStatusEnum playerStatusEnum;
 
     public Player() {
