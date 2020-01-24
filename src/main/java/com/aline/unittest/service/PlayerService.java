@@ -36,22 +36,11 @@ public class PlayerService {
         return player;
     }
 
-    public Enemy giveDamage(Enemy enemy, AttackTypeEnum attackType, Float baseDamage) {
-        Float realDamage = attackService.realDamage(attackType, baseDamage);
+    // Método para mostrar o uso do Argument Captor
+    public void createStrongClonePlayer(Player player) {
+        Player playerClone = new Player(player.getId(), "playerClone", player.getSize(), player.getVelocity());
 
-        if (enemy.getLife() < realDamage)
-            return enemyService.die(enemy);
-
-        enemy.setLife(enemy.getLife() - realDamage);
-        return enemy;
-    }
-
-    public Player getStronger(Player player) {
-        if (player.getLife() == 0.0F)
-            throw new DeadPlayerException("The player is dead.");
-        player.setLife(player.getLife() + 100F);
-        player.setPlayerStatusEnum(PlayerStatusEnum.STRONG);
-        return player;
+        enemyService.doNothing(playerClone);
     }
 
     public Player die(Player player) {
@@ -64,16 +53,6 @@ public class PlayerService {
         player.setPlayerStatusEnum(PlayerStatusEnum.DEAD);
     }
 
-//
-//    public Player createClonePlayer(Player player){
-//
-//    }
 
-    // Método para mostrar o uso do Argument Captor do Mockito
-    public void createStrongClonePlayer(Player player) {
-        Player playerClone = new Player(player.getId(), "playerClone", player.getSize(), player.getVelocity());
-
-        enemyService.doNothing(playerClone);
-    }
 }
 

@@ -11,7 +11,7 @@ public class AttackService {
         if (missAttack()) {
             return 0F;
         }
-        if (baseDamage > 1000.0F) {
+        if (baseDamage >= 900.0F) {
             throw new DamageExceededException("Damage Exceeded");
         }
         if (AttackTypeEnum.CRITICAL.equals(attackTypeEnum)){
